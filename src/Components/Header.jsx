@@ -16,7 +16,9 @@ export default function Header({ cart, setCart }) {
 
     const isEmpty = () => cart.length === 0;
 
-    const total = useMemo(() => cart.reduce((acc, guitar) => acc + guitar.price * guitar.quantity, 0), [cart]);
+    const total = useMemo(() => 
+                cart.reduce((acc, guitar) => acc + guitar.price * guitar.quantity, 0), 
+    [cart]);
 return (
     <header className="py-5 header">
     <div className="container-xl">
@@ -68,7 +70,36 @@ return (
                                                                                             setCart(newCart);
                                                                                         }}
 
+                                                                                    
+
                                                                                     >X</button>
+
+                                                                                    <button className="btn btn-dark" onClick={() => {
+                                                                                        const newCart = cart.map((product) => {
+                                                                                            if (product.name === guitar.name) {
+                                                                                                product.quantity = product.quantity + 1;
+                                                                                            }
+
+                                                                                            return product;
+                                                                                        }
+                                                                                        );
+                                                                                        setCart(newCart);
+                                                                                    }
+                                                                                    }>+</button>
+
+                                                                                    <button className="btn btn-dark" onClick={() => {
+                                                                                        const newCart = cart.map((product) => {
+                                                                                            if (product.name === guitar.name) {
+                                                                                                product.quantity = product.quantity - 1;
+                                                                                            }
+
+                                                                                            return product;
+                                                                                        }
+                                                                                        ).filter((product) => product.quantity > 0);
+                                                                                        setCart(newCart);
+                                                                                    }
+                                                                                    }>-</button>
+                                                                                    
                                                                             </td>
                                                                     </tr>
                                                             ))}
